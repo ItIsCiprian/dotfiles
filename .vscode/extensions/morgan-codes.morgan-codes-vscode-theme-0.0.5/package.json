@@ -1,0 +1,53 @@
+{
+	"name": "morgan-codes-vscode-theme",
+	"version": "0.0.5",
+	"displayName": "morgan.codes-theme",
+	"description": "A bright, modern, contrasting theme - created for you, by Morgan Richardson.",
+	"publisher": "morgan-codes",
+	"maintainers": [
+		"Morgan Richardson <hello@morgancodes.co>"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/morganrmarie/morgancodes-vscode-theme.git"
+	},
+	"bugs": {
+		"url": "https://github.com/morganrmarie/morgancodes-vscode-theme/issues"
+	},
+	"engines": {
+		"vscode": "^1.13.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"keywords": [
+		"morgan.codes",
+		"dark",
+		"modern",
+		"contrasting"
+	],
+	"icon": "icon.jpg",
+	"galleryBanner": {
+		"color": "#000000",
+		"theme": "dark"
+	},
+	"contributes": {
+		"themes": [
+			{
+				"label": "morgan.codes",
+				"uiTheme": "vs-dark",
+				"path": "./themes/morgan.codes-color-theme.json"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "4655ffe9-87aa-4c8c-83bc-bcfc38b405d5",
+		"publisherId": "d2c857c7-3062-42ca-a5d7-b15bb402e072",
+		"publisherDisplayName": "morgan-codes",
+		"targetPlatform": "undefined",
+		"updated": false,
+		"isPreReleaseVersion": false,
+		"hasPreReleaseVersion": false,
+		"installedTimestamp": 1707171285199
+	}
+}
