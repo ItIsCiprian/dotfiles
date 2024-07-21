@@ -89,8 +89,7 @@ export BAT_THEME="Catppuccin Macchiato"
 # Eza Configuration
 # -----------------------------------------------------------------------------
 # Aliases for ls command with icons.
-alias ls="eza --icons=always --color=always --long --git --no-filesize --no-time --no-user --permissions"
-
+alias ls="eza --icons --color=always --long --git --no-filesize --no-time --no-user --no-permissions"
 # -----------------------------------------------------------------------------
 # TheFuck Configuration
 # -----------------------------------------------------------------------------
