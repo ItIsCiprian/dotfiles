@@ -127,3 +127,6 @@ export PATH="$PATH:$HOME/.config/emacs/bin"
 # Sets up FZF preview options for specific commands.
 export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
