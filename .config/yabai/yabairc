@@ -1,8 +1,12 @@
 #!/usr/bin/env sh
 
+# Load the scripting addition (SA) for yabai with superuser privileges
 sudo yabai --load-sa
+
+# Automatically reload the scripting addition if the Dock restarts
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
+# Configure yabai settings
 yabai -m config external_bar               all:36:0       \
                 mouse_follows_focus        off            \
                 focus_follows_mouse        off            \
@@ -29,13 +33,23 @@ yabai -m config external_bar               all:36:0       \
                 right_padding              8              \
                 window_gap                 10
 
-# Exclude problematic apps from being managed:
-yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor)$" manage=off
+# Exclude problematic apps from being managed by yabai
+EXCLUDED_APPS="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor)$"
+yabai -m rule --add app="$EXCLUDED_APPS" manage=off
+
+# Exclude specific windows within Finder from being managed
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
+
+# Exclude specific windows within Safari from being managed
 yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
+
+# Exclude the "About This Mac" window from being managed
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
+
+# Exclude the "Select file to save to" dialog in Inkscape from being managed
 yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
 
+# Set the layout to Binary Space Partitioning (BSP)
 yabai -m config layout bsp
 
-echo "yabai configuration loaded.."
+echo "yabai configuration loaded..."
