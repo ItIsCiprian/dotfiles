@@ -1,5 +1,6 @@
+
 {
-  description = "My Darwin system flake";
+  description = "Ikigai Darwin system flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -14,32 +15,40 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager }:
   let
     configuration = { pkgs, ... }: {
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages =
-        [ 
-          pkgs.vim
-          pkgs.direnv
-          pkgs.age
-          pkgs.sshs
-          pkgs.atac
-          pkgs.termshark
-          pkgs.portal
-          pkgs.glow
-        ];
+      # List of packages installed in system profile.
+      environment.systemPackages = [
+        pkgs.vim
+        pkgs.direnv
+        pkgs.age
+        pkgs.sshs
+        pkgs.atac
+        pkgs.termshark
+        pkgs.portal
+        pkgs.glow
+      ];
+      
+      # Enable services and programs
       services.nix-daemon.enable = true;
       nix.settings.experimental-features = "nix-command flakes";
-      programs.zsh.enable = true;  # default shell on catalina
+      programs.zsh.enable = true;  # Default shell on macOS
+
+      # System configuration
       system.configurationRevision = self.rev or self.dirtyRev or null;
-      system.stateVersion = 4;
-      nixpkgs.hostPlatform = "aarch64-darwin";
+      system.stateVersion = 4;  # Important for system upgrades
+      nixpkgs.hostPlatform = "aarch64-darwin";  # Adjust architecture if needed
+
+      # TouchID sudo authentication
       security.pam.enableSudoTouchIdAuth = true;
 
-      users.users.omerxx.home = "/Users/ionutcipriananescu/";
+      # User setup
+      users.users.ionutcipriananescu.home = "/Users/ionutcipriananescu/";
+      
+      # Home Manager settings
       home-manager.backupFileExtension = "backup";
       nix.configureBuildUsers = true;
       nix.useDaemon = true;
 
+      # System defaults
       system.defaults = {
         dock.autohide = true;
         dock.mru-spaces = false;
@@ -50,22 +59,23 @@
         screensaver.askForPasswordDelay = 10;
       };
 
-      # Homebrew needs to be installed on its own!
+      # Homebrew settings
       homebrew.enable = true;
       homebrew.casks = [
-	      "wireshark"
-              "google-chrome"
+        "wireshark"
+        "google-chrome"
       ];
       homebrew.brews = [
-	      "imagemagick"
+        "imagemagick"
       ];
     };
   in
   {
+    # Define the Darwin configuration
     darwinConfigurations."ionutcipriananescu-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      modules = [ 
-	configuration
+      system = "x86_64-darwin";  # Ensure this matches your system architecture
+      modules = [
+        configuration
         home-manager.darwinModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
@@ -74,7 +84,7 @@
       ];
     };
 
-    # Expose the package set, including overlays, for convenience.
+    # Expose the package set, including overlays
     darwinPackages = self.darwinConfigurations."ionutcipriananescu-MacBook-Pro".pkgs;
   };
 }
