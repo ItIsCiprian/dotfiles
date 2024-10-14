@@ -2,23 +2,22 @@
 
 {
   home.username = "ionutcipriananescu";
-  home.homeDirectory = lib.mkForce "/Users/ionutcipriananescu";  # Use lib.mkForce to give this value higher priority
+  home.homeDirectory = "${builtins.getEnv "HOME"}";  # Dynamically set the home directory path
   home.stateVersion = "23.05"; # Please read the comment before changing.
 
   home.packages = [ ];
 
- 
-home.file = {
-  ".zshrc".source = "${builtins.getEnv "HOME"}/dotfiles/zshrc/.zshrc";
-  ".config/wezterm".source = "${builtins.getEnv "HOME"}/dotfiles/wezterm";
-  ".config/skhd".source = "${builtins.getEnv "HOME"}/dotfiles/skhd";
-  ".config/starship".source = "${builtins.getEnv "HOME"}/dotfiles/starship";
-  ".config/zellij".source = "${builtins.getEnv "HOME"}/dotfiles/zellij";
-  ".config/nvim".source = "${builtins.getEnv "HOME"}/dotfiles/nvim";
-  ".config/nix".source = "${builtins.getEnv "HOME"}/dotfiles/nix";
-  ".config/nix-darwin".source = "${builtins.getEnv "HOME"}/dotfiles/nix-darwin";
-  ".config/tmux".source = "${builtins.getEnv "HOME"}/dotfiles/tmux";
-};
+  home.file = {
+    ".zshrc".source = "${config.home.homeDirectory}/dotfiles/zshrc/.zshrc";
+    ".config/wezterm".source = "${config.home.homeDirectory}/dotfiles/wezterm";
+    ".config/skhd".source = "${config.home.homeDirectory}/dotfiles/skhd";
+    ".config/starship".source = "${config.home.homeDirectory}/dotfiles/starship";
+    ".config/zellij".source = "${config.home.homeDirectory}/dotfiles/zellij";
+    ".config/nvim".source = "${config.home.homeDirectory}/dotfiles/nvim";
+    ".config/nix".source = "${config.home.homeDirectory}/dotfiles/nix";
+    ".config/nix-darwin".source = "${config.home.homeDirectory}/dotfiles/nix-darwin";
+    ".config/tmux".source = "${config.home.homeDirectory}/dotfiles/tmux";
+  };
 
   home.sessionVariables = { };
 
