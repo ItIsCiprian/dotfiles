@@ -1,12 +1,12 @@
 { config, pkgs, lib, ... }:
 
 let
-home.homeDirectory = builtins.getEnv "HOME";
-  in
+  homeDir = builtins.getEnv "HOME"; # Get the home directory from the environment
+in
 {
   home.username = "ionutcipriananescu";
-  home.homeDirectory = lib.mkForce homeDir;  # Use mkForce to resolve conflicting values
-  home.stateVersion = "23.05"; # Please read the comment before changing.
+  home.homeDirectory = lib.mkDefault (if homeDir != "" then homeDir else "/Users/ionutcipriananescu");
+  home.stateVersion = "23.05";
 
   home.packages = [ ];
 
