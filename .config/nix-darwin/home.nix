@@ -1,22 +1,25 @@
 { config, pkgs, lib, ... }:
 
+let
+home.homeDirectory = builtins.getEnv "HOME";
+  in
 {
   home.username = "ionutcipriananescu";
-  home.homeDirectory = "${builtins.getEnv "HOME"}";  # Dynamically set the home directory path
+  home.homeDirectory = lib.mkForce homeDir;  # Use mkForce to resolve conflicting values
   home.stateVersion = "23.05"; # Please read the comment before changing.
 
   home.packages = [ ];
 
   home.file = {
-    ".zshrc".source = "${config.home.homeDirectory}/dotfiles/zshrc/.zshrc";
-    ".config/wezterm".source = "${config.home.homeDirectory}/dotfiles/wezterm";
-    ".config/skhd".source = "${config.home.homeDirectory}/dotfiles/skhd";
-    ".config/starship".source = "${config.home.homeDirectory}/dotfiles/starship";
-    ".config/zellij".source = "${config.home.homeDirectory}/dotfiles/zellij";
-    ".config/nvim".source = "${config.home.homeDirectory}/dotfiles/nvim";
-    ".config/nix".source = "${config.home.homeDirectory}/dotfiles/nix";
-    ".config/nix-darwin".source = "${config.home.homeDirectory}/dotfiles/nix-darwin";
-    ".config/tmux".source = "${config.home.homeDirectory}/dotfiles/tmux";
+    ".zshrc".source = "${homeDir}/dotfiles/zshrc/.zshrc";
+    ".config/wezterm".source = "${homeDir}/dotfiles/wezterm";
+    ".config/skhd".source = "${homeDir}/dotfiles/skhd";
+    ".config/starship".source = "${homeDir}/dotfiles/starship";
+    ".config/zellij".source = "${homeDir}/dotfiles/zellij";
+    ".config/nvim".source = "${homeDir}/dotfiles/nvim";
+    ".config/nix".source = "${homeDir}/dotfiles/nix";
+    ".config/nix-darwin".source = "${homeDir}/dotfiles/nix-darwin";
+    ".config/tmux".source = "${homeDir}/dotfiles/tmux";
   };
 
   home.sessionVariables = { };
