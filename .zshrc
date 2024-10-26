@@ -15,6 +15,9 @@ source $ZSH/oh-my-zsh.sh
 alias reload-zsh="source ~/.zshrc"
 alias edit-zsh="nvim ~/.zshrc"
 
+# Doom emacs directory
+export DOOMDIR="$HOME/.config/doom"
+
 # History setup
 HISTFILE=$HOME/.zhistory
 SAVEHIST=1000
