@@ -5,28 +5,27 @@
 ;;------------------------------------------------------------------------------
 ;; User Information
 ;;------------------------------------------------------------------------------
-;; Uncomment and modify to set user information
 ;; (setq user-full-name "John Doe"
 ;;       user-mail-address "john@doe.com")
 
 ;;------------------------------------------------------------------------------
 ;; Font Configuration
 ;;------------------------------------------------------------------------------
-;; Uncomment and modify to set your desired fonts
 (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 
 ;;------------------------------------------------------------------------------
 ;; Theme Configuration
 ;;------------------------------------------------------------------------------
-;; Load the fallback theme first
+;; Set a default fallback theme
 (setq doom-theme 'doom-one)
 
-;; Use catppuccin theme
-(use-package! catppuccin
+;; Use Catppuccin theme
+(use-package! catppuccin-theme
   :config
-  (setq catppuccin-flavor 'macchiato) ;; Set flavor
-  (load-theme 'catppuccin t)) ;; Load theme
+  ;; Set the Catppuccin flavour (latte, frappe, macchiato, or mocha)
+  (setq catppuccin-flavour 'macchiato)
+  (load-theme 'catppuccin t))
 
 ;;------------------------------------------------------------------------------
 ;; Line Numbers Configuration
