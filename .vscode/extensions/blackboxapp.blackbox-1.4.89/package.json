@@ -435,6 +435,7 @@
 		"installedTimestamp": 1735755482435,
 		"pinned": false,
 		"preRelease": false,
-		"source": "gallery"
+		"source": "gallery",
+		"size": 65360082
 	}
 }
