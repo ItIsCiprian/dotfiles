@@ -353,6 +353,7 @@
 		"hasPreReleaseVersion": false,
 		"installedTimestamp": 1717063664414,
 		"pinned": false,
-		"source": "gallery"
+		"source": "gallery",
+		"size": 9625633
 	}
 }

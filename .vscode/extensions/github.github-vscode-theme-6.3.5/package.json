@@ -107,7 +107,8 @@
 		"installedTimestamp": 1730401341320,
 		"pinned": false,
 		"preRelease": false,
-		"source": "gallery"
+		"source": "gallery",
+		"size": 286605
 	},
 	"publishConfig": {
 		"access": "public"

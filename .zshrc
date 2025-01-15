@@ -91,12 +91,9 @@ export BAT_THEME="Catppuccin Macchiato"
 # -----------------------------------------------------------------------------
 # Eza Configuration
 # -----------------------------------------------------------------------------
-# Aliases for ls command with icons.
-# ---- Eza (better ls) -----
-alias ls="eza --color=always --long --git  --icons=always"
-# -----------------------------------------------------------------------------
-# TheFuck Configuration
-# -----------------------------------------------------------------------------
+## ---- Eza (better ls) -----
+alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions" -----------------------------------------------------------------------------
+
 # Defines aliases for TheFuck command correction tool.
 eval $(thefuck --alias)
 eval $(thefuck --alias fk)
