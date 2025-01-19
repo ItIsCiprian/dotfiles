@@ -3,14 +3,13 @@ return {
   dependencies = "nvim-tree/nvim-web-devicons",
   config = function()
     local nvimtree = require("nvim-tree")
-
     -- recommended settings from nvim-tree documentation
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
-
     nvimtree.setup({
       view = {
-        width = 35,
+        adaptive_size = true, -- Move this to root of view
+        width = 35, -- Keep as simple number
         relativenumber = true,
       },
       -- change folder arrow icons
@@ -21,20 +20,18 @@ return {
         icons = {
           glyphs = {
             folder = {
-              arrow_closed = "", -- arrow when folder is closed
-              arrow_open = "", -- arrow when folder is open
+              arrow_closed = "", -- arrow when folder is closed
+              arrow_open = "", -- arrow when folder is open
             },
           },
         },
       },
-      -- disable window_picker for
-      -- explorer to work well with
-      -- window splits
       actions = {
         open_file = {
           window_picker = {
             enable = false,
           },
+          resize_window = true, -- This will resize when opening files
         },
       },
       filters = {
@@ -47,10 +44,17 @@ return {
 
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
+    keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
+    keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" })
+    keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" })
+    keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" })
 
-    keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
-    keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
-    keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
-    keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
+    -- Expand/collapse keymaps
+    keymap.set("n", "zo", function()
+      require("nvim-tree.api").tree.expand_all()
+    end, { desc = "Expand all folders in tree" })
+    keymap.set("n", "zc", function()
+      require("nvim-tree.api").tree.collapse_all()
+    end, { desc = "Collapse all folders in tree" })
   end,
 }
