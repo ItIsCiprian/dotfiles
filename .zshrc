@@ -1,66 +1,96 @@
+#!/usr/bin/env zsh
+# ~/.zshrc - Zsh configuration file
 # -----------------------------------------------------------------------------
-# Oh My Zsh Configuration
+# Table of Contents:
+# 1. Path Configuration
+# 2. Oh My Zsh Setup
+# 3. History Configuration
+# 4. Key Bindings
+# 5. Package Managers (Homebrew, NVM)
+# 6. Tools Configuration (FZF, Bat, Eza, etc.)
+# 7. Navigation Tools (Zoxide)
+# 8. Custom Aliases and Functions
+# 9. Terminal Integration
 # -----------------------------------------------------------------------------
-# Sets up Oh My Zsh environment and themes.
+
+# -----------------------------------------------------------------------------
+# 1. Path Configuration
+# -----------------------------------------------------------------------------
+# Set PATH to include user's private bin directories and other tools
+export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
+export PATH="$PATH:$HOME/.config/emacs/bin"
+
+# -----------------------------------------------------------------------------
+# 2. Oh My Zsh Setup
+# -----------------------------------------------------------------------------
+# Path to Oh My Zsh installation
 export ZSH="$HOME/.oh-my-zsh"
 
-eval "$(starship init zsh)"
+# Starship prompt configuration
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
+eval "$(starship init zsh)"
 
-# Zsh plugins
-plugins=(git web-search zsh-autosuggestions zsh-syntax-highlighting)
+# Load Oh My Zsh plugins
+plugins=(
+  git
+  web-search
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
 source $ZSH/oh-my-zsh.sh
 
-# Aliases for reloading and editing zsh configuration.
-alias reload-zsh="source ~/.zshrc"
-alias edit-zsh="nvim ~/.zshrc"
-
-# Doom emacs directory
+# Doom Emacs configuration directory
 export DOOMDIR="$HOME/.config/doom"
 
-# History setup
+# -----------------------------------------------------------------------------
+# 3. History Configuration
+# -----------------------------------------------------------------------------
 HISTFILE=$HOME/.zhistory
+HISTSIZE=1000
 SAVEHIST=1000
-HISTSIZE=999
-setopt share_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups
-setopt hist_verify
 
-# Enables completion using arrow keys (based on history).
+# History options
+setopt share_history        # Share history between sessions
+setopt hist_expire_dups_first # Remove duplicates first when history is full
+setopt hist_ignore_dups     # Don't store duplicated commands
+setopt hist_verify          # Show command with history expansion before running it
+
+# -----------------------------------------------------------------------------
+# 4. Key Bindings
+# -----------------------------------------------------------------------------
+# History search with arrow keys
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
 # -----------------------------------------------------------------------------
-# Homebrew Configuration
+# 5. Package Managers
 # -----------------------------------------------------------------------------
-# Initializes Homebrew environment.
+# Homebrew initialization
 eval "$(/usr/local/bin/brew shellenv)"
 
-# -----------------------------------------------------------------------------
-# Node Version Manager (NVM) Configuration
-# -----------------------------------------------------------------------------
-# Sets up NVM for managing different Node.js versions.
+# Node Version Manager (NVM)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Loads NVM
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # Loads bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Load NVM
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # Load NVM bash completion
 
 # -----------------------------------------------------------------------------
-# FZF Configuration (Fuzzy Finder)
+# 6. Tools Configuration
 # -----------------------------------------------------------------------------
-# Sets up FZF key bindings and fuzzy completion.
+# FZF (Fuzzy Finder) configuration
 eval "$(fzf --zsh)"
 
-# Sets up FZF theme and default options.
+# FZF theme and default options
 export FZF_DEFAULT_OPTS="
   --color=fg:#CDD6F4,bg:#1E1E2E,hl:#F5C2E7,fg+:#CDD6F4,bg+:#302D41,hl+:#F5C2E7
   --color=info:#FAB387,prompt:#F5C2E7,pointer:#F28FAD,marker:#A6E3A1,spinner:#89B4FA,header:#1E1E2E
 "
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
-# Defines functions for FZF preview customization.
+# FZF functions for custom path generation and preview
 _fzf_compgen_path() {
   fd --hidden --exclude .git . "$1"
 }
@@ -69,7 +99,7 @@ _fzf_compgen_dir() {
   fd --type=d --hidden --exclude .git . "$1"
 }
 
-# Advanced customization of FZF options via _fzf_comprun function.
+# Advanced customization of FZF options
 _fzf_comprun() {
   local command=$1
   shift
@@ -82,54 +112,39 @@ _fzf_comprun() {
   esac
 }
 
-# -----------------------------------------------------------------------------
-# Bat Configuration
-# -----------------------------------------------------------------------------
-# Sets up Bat (a cat clone with syntax highlighting) theme.
+# Bat configuration
 export BAT_THEME="Catppuccin Macchiato"
 
-# -----------------------------------------------------------------------------
-# Eza Configuration
-# -----------------------------------------------------------------------------
-## ---- Eza (better ls) -----
-alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions" -----------------------------------------------------------------------------
-
-# Defines aliases for TheFuck command correction tool.
+# TheFuck command correction tool
 eval $(thefuck --alias)
 eval $(thefuck --alias fk)
 
 # -----------------------------------------------------------------------------
-# Zoxide Configuration
+# 7. Navigation Tools
 # -----------------------------------------------------------------------------
-# Initializes Zoxide for better directory navigation.
+# Zoxide for better directory navigation
 eval "$(zoxide init zsh)"
 alias cd="z"
 
 # -----------------------------------------------------------------------------
-# Custom Aliases and Functions
+# 8. Custom Aliases and Functions
 # -----------------------------------------------------------------------------
-# Set up an alias for work sessions
-alias work="timer 60m && terminal-notifier -message 'Pomodoro' -title 'Work Timer is up! Take a Break 😊' -appIcon '~/Pictures/tomato.png' -sound Crystal"
+# Zsh configuration management
+alias reload-zsh="source ~/.zshrc"
+alias edit-zsh="nvim ~/.zshrc"
 
-# Set up an alias for rest periods
+# Productivity tools
+alias work="timer 60m && terminal-notifier -message 'Pomodoro' -title 'Work Timer is up! Take a Break 😊' -appIcon '~/Pictures/tomato.png' -sound Crystal"
 alias rest="timer 10m && terminal-notifier -message 'Pomodoro' -title 'Break is over! Get back to work 😬' -appIcon '~/Pictures/tomato.png' -sound Crystal"
 
-# Use Neovim as the default editor instead of Vim
+# File browsing and editing
 alias vim="nvim"
+alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
 
 # -----------------------------------------------------------------------------
-# Add Emacs to PATH
+# 9. Terminal Integration
 # -----------------------------------------------------------------------------
-export PATH="$PATH:$HOME/.config/emacs/bin"
-
-# -----------------------------------------------------------------------------
-# FZF Customizations
-# -----------------------------------------------------------------------------
-# Sets up FZF preview options for specific commands.
-export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
-export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
-
+# iTerm2 shell integration
+if [ -e "${HOME}/.iterm2_shell_integration.zsh" ]; then
+  source "${HOME}/.iterm2_shell_integration.zsh"
+fi
