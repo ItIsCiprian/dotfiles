@@ -1,0 +1,52 @@
+{
+	"name": "kanagawa-glass",
+	"displayName": "Kanagawa Glass",
+	"description": "Acrylic Kanagawa theme for use with Vibrancy",
+	"version": "0.0.5",
+	"publisher": "AFLO",
+	"author": {
+		"name": "Ayoob"
+	},
+	"homepage": "https://github.com/Ayoobf/kanagawa-glass/blob/master/README.md",
+	"bugs": {
+		"email": "rflooivl@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Ayoobf/kanagawa-glass"
+	},
+	"keywords": [
+		"theme",
+		"dark theme",
+		"kanagawa",
+		"kanagawa glass",
+		"vibrancy",
+		"ayoob.flo",
+		"acrylic",
+		"glass"
+	],
+	"icon": "images/icon.png",
+	"galleryBanner": {
+		"color": "#a196ff",
+		"theme": "dark"
+	},
+	"engines": {
+		"vscode": "^1.89.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"label": "Kanagawa Glass",
+				"uiTheme": "vs-dark",
+				"path": "./themes/Kanagawa Glass-color-theme.json"
+			}
+		]
+	},
+	"__metadata": {
+		"installedTimestamp": 1741795784374,
+		"size": 1129470
+	}
+}

@@ -1,9 +1,14 @@
-theme = catppuccin-macchiato
-font-size = 12
-background-blur-radius = 20
+theme = catppuccin-macchiato 
+#theme = rose-pine
+# theme = GruvboxDarkHard
+font-family = CommitMono Nerd Font
+# font-size = 12
 mouse-hide-while-typing = true
-window-decoration = true
-# keybind = global:cmd+/=toggle_quick_terminal
-macos-option-as-alt = true
-# background-opacity = 0.7
-# background-blur-radius = 20 
+background-opacity = 0.8
+background = "#000000"
+window-decoration = false
+mouse-scroll-multiplier = 0.5
+shell-integration-features = no-cursor
+cursor-style = block
+window-padding-x = 5
+window-padding-y = 5
