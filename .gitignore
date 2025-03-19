@@ -1,10 +1,2 @@
 # Ignore all VSCode extensions
 .vscode/extensions/
-
-# But keep workspace settings and recommendations
-!.vscode/settings.json
-!.vscode/extensions.json
-!.vscode/tasks.json
-!.vscode/launch.json
-
-.vscode/extensions/
