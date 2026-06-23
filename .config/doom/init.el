@@ -15,7 +15,7 @@
 
        :ui
        doom              ; what makes DOOM look the way it does
-       doom-dashboard    ; a nifty splash screen for Emacs
+       dashboard         ; a nifty splash screen for Emacs
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
@@ -60,7 +60,7 @@
        upload            ; map local to remote projects via ssh/ftp
 
        :os
-       (:if (featurep! :system 'macos) macos) ; improve compatibility with macOS
+       macos             ; improve compatibility with macOS
        tty               ; improve the terminal Emacs experience
 
        :lang

@@ -75,4 +75,5 @@
 ;;------------------------------------------------------------------------------
 ;; Install the Catppuccin theme from GitHub
 (package! catppuccin-theme
-  :recipe (:host github :repo "catppuccin/emacs"))
+  :recipe (:host github :repo "catppuccin/emacs")
+  :pin "COMMIT_HASH")
