@@ -16,135 +16,178 @@
 # -----------------------------------------------------------------------------
 # 1. Path Configuration
 # -----------------------------------------------------------------------------
-# Set PATH to include user's private bin directories and other tools
-export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
-export PATH="$PATH:$HOME/.config/emacs/bin"
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"           # Apple Silicon Homebrew (must come first)
+export PATH="$PATH:$HOME/.config/emacs/bin"                        # Doom Emacs binaries
+export PATH="$PATH:$HOME/.local/bin"                               # User local binaries
 
 # -----------------------------------------------------------------------------
 # 2. Oh My Zsh Setup
 # -----------------------------------------------------------------------------
-# Path to Oh My Zsh installation
 export ZSH="$HOME/.oh-my-zsh"
+export DOOMDIR="$HOME/.config/doom"
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
-# Starship prompt configuration
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
-eval "$(starship init zsh)"
-
-# Load Oh My Zsh plugins
 plugins=(
   git
   web-search
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
-source $ZSH/oh-my-zsh.sh
 
-# Doom Emacs configuration directory
-export DOOMDIR="$HOME/.config/doom"
+source "$ZSH/oh-my-zsh.sh"
+eval "$(starship init zsh)"
 
 # -----------------------------------------------------------------------------
 # 3. History Configuration
 # -----------------------------------------------------------------------------
-HISTFILE=$HOME/.zhistory
-HISTSIZE=1000
-SAVEHIST=1000
+HISTFILE="$HOME/.zhistory"
+HISTSIZE=10000
+SAVEHIST=10000
 
-# History options
-setopt share_history        # Share history between sessions
-setopt hist_expire_dups_first # Remove duplicates first when history is full
-setopt hist_ignore_dups     # Don't store duplicated commands
-setopt hist_verify          # Show command with history expansion before running it
+setopt share_history            # Share history across sessions
+setopt hist_expire_dups_first   # Expire duplicates first
+setopt hist_ignore_dups         # Don't store consecutive duplicates
+setopt hist_ignore_space        # Don't store commands starting with a space
+setopt hist_verify              # Preview history expansions before running
 
 # -----------------------------------------------------------------------------
 # 4. Key Bindings
 # -----------------------------------------------------------------------------
-# History search with arrow keys
-bindkey '^[[A' history-search-backward
-bindkey '^[[B' history-search-forward
+bindkey '^[[A' history-search-backward   # Up arrow: history search
+bindkey '^[[B' history-search-forward    # Down arrow: history search
+bindkey '^[[H' beginning-of-line         # Home key
+bindkey '^[[F' end-of-line               # End key
 
 # -----------------------------------------------------------------------------
 # 5. Package Managers
 # -----------------------------------------------------------------------------
-# Homebrew initialization
-eval "$(/usr/local/bin/brew shellenv)"
+
+# Homebrew (Apple Silicon)
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Node Version Manager (NVM)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Load NVM
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # Load NVM bash completion
+[ -s "$NVM_DIR/nvm.sh" ]             && source "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ]    && source "$NVM_DIR/bash_completion"
 
 # -----------------------------------------------------------------------------
 # 6. Tools Configuration
 # -----------------------------------------------------------------------------
-# FZF (Fuzzy Finder) configuration
+
+# --- FZF ---
 eval "$(fzf --zsh)"
 
-# FZF theme and default options
-export FZF_DEFAULT_OPTS="
-  --color=fg:#CDD6F4,bg:#1E1E2E,hl:#F5C2E7,fg+:#CDD6F4,bg+:#302D41,hl+:#F5C2E7
-  --color=info:#FAB387,prompt:#F5C2E7,pointer:#F28FAD,marker:#A6E3A1,spinner:#89B4FA,header:#1E1E2E
-"
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+
+export FZF_DEFAULT_OPTS="
+  --color=fg:#CDD6F4,bg:#1E1E2E,hl:#F5C2E7
+  --color=fg+:#CDD6F4,bg+:#302D41,hl+:#F5C2E7
+  --color=info:#FAB387,prompt:#F5C2E7,pointer:#F28FAD
+  --color=marker:#A6E3A1,spinner:#89B4FA,header:#1E1E2E
+  --border rounded
+  --prompt '❯ '
+  --pointer '▶'
+  --marker '✓'
+"
+
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
-# FZF functions for custom path generation and preview
-_fzf_compgen_path() {
-  fd --hidden --exclude .git . "$1"
-}
+_fzf_compgen_path() { fd --hidden --exclude .git . "$1" }
+_fzf_compgen_dir()  { fd --type=d --hidden --exclude .git . "$1" }
 
-_fzf_compgen_dir() {
-  fd --type=d --hidden --exclude .git . "$1"
-}
-
-# Advanced customization of FZF options
 _fzf_comprun() {
-  local command=$1
-  shift
-
+  local command=$1; shift
   case "$command" in
     cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
     export|unset) fzf --preview "eval 'echo \${}'" "$@" ;;
     ssh)          fzf --preview 'dig {}' "$@" ;;
-    *)            fzf --preview "bat -n --color=always --line-range :500 {}" "$@" ;;
+    *)            fzf --preview 'bat -n --color=always --line-range :500 {}' "$@" ;;
   esac
 }
 
-# Bat configuration
+# --- Bat ---
 export BAT_THEME="Catppuccin Macchiato"
 
-# TheFuck command correction tool
-eval $(thefuck --alias)
-eval $(thefuck --alias fk)
+# --- TheFuck ---
+eval "$(thefuck --alias)"
+eval "$(thefuck --alias fk)"
 
 # -----------------------------------------------------------------------------
 # 7. Navigation Tools
 # -----------------------------------------------------------------------------
-# Zoxide for better directory navigation
 eval "$(zoxide init zsh)"
 alias cd="z"
 
 # -----------------------------------------------------------------------------
 # 8. Custom Aliases and Functions
 # -----------------------------------------------------------------------------
-# Zsh configuration management
+
+# --- Zsh Management ---
 alias reload-zsh="source ~/.zshrc"
 alias edit-zsh="nvim ~/.zshrc"
 
-# Productivity tools
+# --- Editors ---
+alias vim="nvim"
+alias vi="nvim"
+
+# --- File Listing ---
+alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias ll="eza --color=always --long --git --icons=always"
+alias la="eza --color=always --long --git --icons=always --all"
+alias lt="eza --color=always --tree --icons=always --level=2"
+
+# --- Navigation ---
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# --- Git Shortcuts ---
+alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit -m"
+alias gp="git push"
+alias gl="git log --oneline --graph --decorate"
+
+# --- Utilities ---
+alias cat="bat"
+alias grep="grep --color=auto"
+alias df="df -h"
+alias du="du -h"
+
+# --- Pomodoro ---
 alias work="timer 60m && terminal-notifier -message 'Pomodoro' -title 'Work Timer is up! Take a Break 😊' -appIcon '~/Pictures/tomato.png' -sound Crystal"
 alias rest="timer 10m && terminal-notifier -message 'Pomodoro' -title 'Break is over! Get back to work 😬' -appIcon '~/Pictures/tomato.png' -sound Crystal"
 
-# File browsing and editing
-alias vim="nvim"
-alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+# --- Functions ---
+
+# Make dir and cd into it
+mkcd() { mkdir -p "$1" && cd "$1" }
+
+# Quick look at PATH
+path() { echo "$PATH" | tr ':' '\n' | nl }
+
+# Extract any archive
+extract() {
+  case "$1" in
+    *.tar.bz2) tar xjf "$1"   ;;
+    *.tar.gz)  tar xzf "$1"   ;;
+    *.tar.xz)  tar xJf "$1"   ;;
+    *.zip)     unzip "$1"     ;;
+    *.7z)      7z x "$1"      ;;
+    *.rar)     unrar x "$1"   ;;
+    *)         echo "Unknown archive format: $1" ;;
+  esac
+}
 
 # -----------------------------------------------------------------------------
 # 9. Terminal Integration
 # -----------------------------------------------------------------------------
-# iTerm2 shell integration
-if [ -e "${HOME}/.iterm2_shell_integration.zsh" ]; then
-  source "${HOME}/.iterm2_shell_integration.zsh"
-fi
+
+# Ghostty / iTerm2 shell integration (load whichever is present)
+[[ "$TERM_PROGRAM" == "iTerm.app" ]] && \
+  [ -e "$HOME/.iterm2_shell_integration.zsh" ] && \
+  source "$HOME/.iterm2_shell_integration.zsh"
