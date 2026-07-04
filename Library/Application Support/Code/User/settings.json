@@ -1,0 +1,92 @@
+{
+    "editor.accessibilitySupport": "off",
+
+    // 🧠 Theme & Icons
+    "workbench.colorTheme": "Catppuccin Macchiato",
+    "workbench.iconTheme": "vscode-icons",
+
+    // ✍️ Editor Look & Feel
+    "editor.fontFamily": "MesloLGM Nerd Font",
+    "editor.fontLigatures": true,
+    "editor.guides.bracketPairs": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.inlineSuggest.suppressSuggestions": true,
+
+    // 💾 Files & Git
+    "files.autoSave": "afterDelay",
+    "git.openRepositoryInParentFolders": "always",
+    "git.autofetch": true,
+    "git.confirmSync": false,
+
+    // 🧱 Terminal — identical to Ghostty
+    "terminal.integrated.fontSize": 12,
+    "terminal.integrated.fontFamily": "MesloLGM Nerd Font",
+    "terminal.integrated.customGlyphs": false,
+    "terminal.integrated.drawBoldTextInBrightColors": false,
+    "terminal.integrated.minimumContrastRatio": 1,
+    "terminal.integrated.inheritEnv": true,
+    "terminal.integrated.gpuAcceleration": "on",
+    "terminal.integrated.sendKeybindingsToShell": true,
+
+    // 🐚 Default shell profile (Zsh + login mode)
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.profiles.linux": {
+        "zsh": {
+            "path": "/usr/bin/zsh",
+            "args": ["-l"]
+        }
+    },
+
+    // 🧩 Terminal Explorer integration
+    "terminal.explorerKind": "both",
+
+    // 🧠 Language-specific rules
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [80],
+        "editor.selectionHighlight": false,
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": "off"
+    },
+
+    // ⚙️ Environment
+    "remote.autoForwardPortsSource": "hybrid",
+    "python.defaultInterpreterPath": "/bin/python",
+
+    // Chat instruction cache (safe to keep)
+    "chat.instructionsFilesLocations": {
+        ".github/instructions": true,
+        ".claude/rules": true,
+        "~/.copilot/instructions": true,
+        "~/.claude/rules": true,
+        "/tmp/postman-collections-post-response.instructions.md": true,
+        "/tmp/postman-collections-pre-request.instructions.md": true,
+        "/tmp/postman-folder-post-response.instructions.md": true,
+        "/tmp/postman-folder-pre-request.instructions.md": true,
+        "/tmp/postman-http-request-post-response.instructions.md": true,
+        "/tmp/postman-http-request-pre-request.instructions.md": true,
+        "C:\\Users\\canescu\\AppData\\Local\\Temp\\postman-collections-post-response.instructions.md": true,
+        "C:\\Users\\canescu\\AppData\\Local\\Temp\\postman-collections-pre-request.instructions.md": true,
+        "C:\\Users\\canescu\\AppData\\Local\\Temp\\postman-folder-post-response.instructions.md": true,
+        "C:\\Users\\canescu\\AppData\\Local\\Temp\\postman-folder-pre-request.instructions.md": true,
+        "C:\\Users\\canescu\\AppData\\Local\\Temp\\postman-http-request-post-response.instructions.md": true,
+        "C:\\Users\\canescu\\AppData\\Local\\Temp\\postman-http-request-pre-request.instructions.md": true,
+        "/var/folders/7k/1v009bz953b89y_fhs3784r40000gn/T/postman-collections-post-response.instructions.md": true,
+        "/var/folders/7k/1v009bz953b89y_fhs3784r40000gn/T/postman-collections-pre-request.instructions.md": true,
+        "/var/folders/7k/1v009bz953b89y_fhs3784r40000gn/T/postman-folder-post-response.instructions.md": true,
+        "/var/folders/7k/1v009bz953b89y_fhs3784r40000gn/T/postman-folder-pre-request.instructions.md": true,
+        "/var/folders/7k/1v009bz953b89y_fhs3784r40000gn/T/postman-http-request-post-response.instructions.md": true,
+        "/var/folders/7k/1v009bz953b89y_fhs3784r40000gn/T/postman-http-request-pre-request.instructions.md": true
+    },
+    "totalTypeScript.hideAllTips": false,
+    "totalTypeScript.hideBasicTips": false,
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+    "chat.mcp.gallery.enabled": true,
+    "dart.flutterSdkPath": "/Users/ciprian/flutter",
+    "chat.remoteAgentHosts": []
+}
